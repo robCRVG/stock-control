@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -30,7 +31,8 @@ export class HomeComponent {
     private formBuilder: FormBuilder,
     private userService: UserService,
     private cookieService: CookieService,
-    private messageService: MessageService){}
+    private messageService: MessageService,
+    private router: Router){}
 
   onSubmitLoginForm(): void{
     if(this.loginForm.value && this.loginForm.valid){
@@ -40,6 +42,7 @@ export class HomeComponent {
           if(response){
             this.cookieService.set('USER_INFO', response?.token);
             this.loginForm.reset();
+            this.router.navigate(['/dashboard'])
             this.messageService.add({
               severity: 'success',
               summary: 'Sucesso',
