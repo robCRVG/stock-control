@@ -1,3 +1,4 @@
+import { MessageService } from 'primeng/api';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
@@ -25,7 +26,11 @@ export class HomeComponent {
     password: ['', Validators.required]
   });
 
-  constructor(private formBuilder: FormBuilder, private userService: UserService, private cookieService: CookieService){}
+  constructor(
+    private formBuilder: FormBuilder,
+    private userService: UserService,
+    private cookieService: CookieService,
+    private messageService: MessageService){}
 
   onSubmitLoginForm(): void{
     if(this.loginForm.value && this.loginForm.valid){
@@ -35,26 +40,51 @@ export class HomeComponent {
           if(response){
             this.cookieService.set('USER_INFO', response?.token);
             this.loginForm.reset();
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Sucesso',
+              detail: `Bem vindo de volta ${response.name}!`,
+              life: 2000,
+            });
           }
         },
-        error: (err) => console.log(err)
-      })
+        error: (err) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Erro',
+            detail: `Erro ao fazer login!`,
+            life: 2000,
+          });
+          console.log(err);
+        },
+      });
     }
-
   }
 
-  onSignUpForm(): void{
+  onSubmitSignUpForm(): void{
     if(this.signUpForm.value && this.signUpForm.valid){
-      this.userService.signUpUser(this.signUpForm.value as SignUpUserRequest)
-      .subscribe({
+      this.userService.signUpUser(this.signUpForm.value as SignUpUserRequest).subscribe({
         next: (response) => {
           if(response){
-            alert('Usuário criado com sucesso!');
             this.signUpForm.reset();
             this.loginCard = true;
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Sucesso',
+              detail: 'Usuário criado com sucesso!',
+              life: 2000,
+            });
           }
         },
-        error: (err) => console.log(err)
+        error: (err) => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Sucesso',
+            detail: 'Usuário criado com sucesso!',
+            life: 2000,
+          });
+          console.log(err);
+        },
       });
     }
   }

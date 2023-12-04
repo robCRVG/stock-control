@@ -19,7 +19,7 @@
         </p-card>
       </form>
       <!--Signup-->
-      <form [formGroup]="signUpForm" (ngSubmit)="onSignUpForm()">
+      <form [formGroup]="signUpForm" (ngSubmit)="onSubmitSignUpForm()">
         <p-card *ngIf="!loginCard" styleClass="mt-10" header="Criar conta" subheader="Crie sua conta">
           <div class="fex justify-content-center align-content-center text-align-center">
             <input type="text" pInputText placeholder="Nome" formControlName="name">
