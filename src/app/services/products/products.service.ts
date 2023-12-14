@@ -20,7 +20,7 @@ export class ProductsService {
 
   constructor(private http: HttpClient, private cookie: CookieService) { }
 
-  GETaLLpRODUCTS(): Observable<Array<GetAllProductsResponse>> {
+  getAllProducts(): Observable<Array<GetAllProductsResponse>> {
     return this.http.get<Array<GetAllProductsResponse>>(
       `${this.API_URL}/products`, this.httpOptions
     ).pipe(
