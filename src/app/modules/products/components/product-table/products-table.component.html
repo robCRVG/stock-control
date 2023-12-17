@@ -90,6 +90,9 @@
             <td [pTooltip]="product?.description" tooltipPosition="top">
               {{product?.description}}
             </td>
+            <td [pTooltip]="product?.category?.name" tooltipPosition="top">
+              {{product?.category?.name}}
+            </td>
             <td>
               <div class="flex justify-content-center gap-3 align-content-center">
                 <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-warning"
